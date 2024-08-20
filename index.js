@@ -8,10 +8,6 @@ const Entry = require('./models/entry')
 app.use(express.static('dist'))
 app.use(express.json())
 app.use(cors())
-app.use((req, res, next) => {
-  res.setHeader('Referrer-Policy', 'no-referrer-when-downgrade');
-  next();
-});
 
 morgan.token('body', (req) => {
   return JSON.stringify(req.body)
