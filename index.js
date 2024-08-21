@@ -22,14 +22,14 @@ app.get('/api/phonebook', (req, res) => {
 
 app.get('/api/phonebook/:id', (req, res, next) => {
   Entry.findById(req.params.id)
-  .then(entry => {
-    if (entry) {
-      res.json(entry)
-    } else {
-      res.status(404).end()
-    }
-  })
-  .catch(error => next(error))
+    .then(entry => {
+      if (entry) {
+        res.json(entry)
+      } else {
+        res.status(404).end()
+      }
+    })
+    .catch(error => next(error))
 })
 
 app.delete('/api/phonebook/:id', (req, res, next) => {
@@ -51,7 +51,7 @@ app.post('/api/phonebook', (req, res, next) => {
   entry.save().then(savedEntry => {
     res.json(savedEntry)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.put('/api/phonebook/:id', (req, res, next) => {
@@ -65,21 +65,21 @@ app.put('/api/phonebook/:id', (req, res, next) => {
 })
 
 app.get('/info', (req, res) => {
- Entry.find({}).then(result => {
-  res.send(`Phonebook has ${result.length} people <br /> ${new Date()}`)
- })
+  Entry.find({}).then(result => {
+    res.send(`Phonebook has ${result.length} people <br /> ${new Date()}`)
+  })
 })
 
 
 const errorHandler = (error, req, res, next) => {
   console.error(error.message)
-  
+
   if(error.name === 'CastError') {
     return res.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
     return res.status(400).json({ error: error.message })
   }
-  
+
   next(error)
 }
 
